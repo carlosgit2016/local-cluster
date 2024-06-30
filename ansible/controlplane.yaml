@@ -5,3 +5,15 @@
     kubernetes_version: "1.30"
   roles:
     - role: controlplane
+  tasks:
+    - name: Tools configuration
+      ansible.builtin.include_tasks: roles/controlplane/tasks/tools.yaml
+
+- name: Configuring CNI
+  hosts: controlplane
+  become: true
+  vars:
+    calico_version: "3.28.0"
+  tasks:
+    - name: Cni installation
+      ansible.builtin.include_tasks: roles/controlplane/tasks/cni.yaml
